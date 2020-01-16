@@ -17,6 +17,8 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
 
     # This is a .ton file
 
+    $password: string
+
     path: "/tmp"
 
     database: {
@@ -24,6 +26,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
         port: 2345
         max_connections: 5000
         enabled: true
+        password: $password
     }
 
     hosts: [
