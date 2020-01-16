@@ -57,23 +57,25 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
 
 Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant` and `json`.
 
-    object(fields: {
+    configuration: object(fields: {
         title: string()
         owner: object(fields: {
             name: string()
             dob: object(fields: {year: int(), month: int(), day: int()})
         })
-        query: variant(options: {
-            term: map(contains: string())
-            bool: object(fields: {
-                must: array(contains: type(name: "query"), required: false)
-                must_not: array(contains: type(name: "query"), required: false),
-                should: array(contains: type(name: "query"), required: false),
-                minimum_should_match: int(default: 1)
-            }) 
-            match_all: object()
-        })
+        query: type(url: "query")
         body: string()
+    })
+
+    query: variant(options: {
+        term: map(contains: string())
+        bool: object(fields: {
+            must: array(contains: type(url: "query"), required: false)
+            must_not: array(contains: type(url: "query"), required: false),
+            should: array(contains: type(url: "query"), required: false),
+            minimum_should_match: int(default: 1)
+        }) 
+        match_all: object()
     })
 
 
