@@ -69,7 +69,7 @@ Schemas are written in TON files. The supported types are `int`, `float`, `strin
                 must: array(contains: type(name: "query"), required: false)
                 must_not: array(contains: type(name: "query"), required: false),
                 should: array(contains: type(name: "query"), required: false),
-                minimum_should_match: int(required: false)
+                minimum_should_match: int(default: 1)
             }) 
             match_all: object()
         })
