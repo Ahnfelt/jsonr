@@ -55,7 +55,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
 
 # Schemas
 
-Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `object`, `map` and `variant`.
+Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map` and `variant`.
 
     object(fields: {
         title: string()
@@ -64,7 +64,13 @@ Schemas are written in TON files. The supported types are `int`, `float`, `strin
             dob: object(fields: {year: int(), month: int(), day: int()})
         })
         query: variant(options: {
-            term: map(values: type(name: "query"))
+            term: map(contains: string())
+            bool: object(fields: {
+                must: array(contains: type(name: "query"), required: false)
+                must_not: array(contains: type(name: "query"), required: false),
+                should: array(contains: type(name: "query"), required: false),
+                minimum_should_match: int(required: false)
+            }) 
             match_all: object()
         })
         body: string()
