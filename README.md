@@ -17,7 +17,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
 
     # This is a .ton file
 
-    $database_server: string # 
+    $database_server: string
 
     path: "/tmp"
 
