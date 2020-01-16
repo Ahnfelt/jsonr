@@ -20,7 +20,7 @@ TON aims to remove all of these pain points.
 
     # This is a .ton file
 
-    $database_server: string()
+    $database_server: string(default: "localhost")
 
     path: "/tmp"
 
