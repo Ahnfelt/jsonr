@@ -11,7 +11,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * TON files can be checked against a schema (defined in a separate TON file)
  * TON files with a schema has a simple and very compact binary encoding
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
- * Variables `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
+ * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
 ## Example
 
