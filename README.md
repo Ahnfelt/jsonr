@@ -57,7 +57,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
 
 Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `object`, `map` and `variant`.
 
-    configuration: object(
+    object(
         title: string()
         owner: object(fields: {
             name: string()
