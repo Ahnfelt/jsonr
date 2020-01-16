@@ -31,4 +31,4 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
       "bobcat"
     ]
 
-
+    query: term("Name": "Mike")
