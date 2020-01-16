@@ -2,6 +2,19 @@
 
 TON is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
 
+## Why?
+
+JSON is great, but it has a number of pain points. 
+
+It's somewhat cumbersome to write do to the quotes around field names, lack of comments etc. 
+
+Projects that use JSON for configuration often have vague documentation, with example snippets of JSON you don't know where to put in your own configuration file, and no way to check if it's valid. 
+
+For APIs, JSON files are quite wasteful, since field names are constantly repeated.
+
+In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
+
+TON aims to remove all of these pain points.
 
 ## Example
 
