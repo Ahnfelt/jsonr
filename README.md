@@ -64,12 +64,13 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
-
-   value = string | number | object | array | 'true' | 'false' | 'null'
-   number = json_number
-   string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-   object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
-   array = '[' (value ','?)* ']'
+```
+value = string | number | object | array | 'true' | 'false' | 'null'
+number = json_number
+string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
+object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
+array = '[' (value ','?)* ']'
+```
 
 Exception to the string rule: `null`, `true` and `false` are the JSON values, not bare strings.
 
