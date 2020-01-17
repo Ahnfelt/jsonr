@@ -1,11 +1,11 @@
-#  JSON X (.jsonx)
+#  JSONR (.jsonr)
 
-JSON X is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
+JSONR is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
 
 
 ## Example
 
-    # This is a .jsonx file
+    # This is a .jsonr file
 
     $database_server: string(default: "localhost")
 
@@ -29,7 +29,7 @@ JSON X is JSON, but with a friendlier syntax, simple to use schemas and efficien
 
 ## Why?
 
-JSON is great, but it has a number of pain points. 
+JSONR is great, but it has a number of pain points. 
 
 It's somewhat cumbersome to write JSON by hand due to the quotes around field names, lack of comments etc. 
 
@@ -39,7 +39,7 @@ For APIs, JSON files are quite wasteful, since field names are constantly repeat
 
 In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
 
-JSON X aims to remove all of these pain points.
+JSONR aims to remove all of these pain points.
 
 # Syntax and features
 
