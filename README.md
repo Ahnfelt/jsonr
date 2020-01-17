@@ -44,14 +44,14 @@ In addition, it's common to end up with a bunch of configuration files that are 
 JSONR aims to remove all of these pain points, while strictly adhering to the JSON value model.
 
 
-# Why not YAML, TOML, XML?
+## Why not YAML, TOML, XML?
 
 These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
 
 In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
 
 
-# Syntax and features
+## Syntax and features
 
 All JSON syntax is accepted, and all TON values are also JSON values. In addition:
 
@@ -65,7 +65,7 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
 
-# Schemas
+## Schemas
 
 Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant` and `json`.
 
@@ -91,6 +91,11 @@ Schemas are written in TON files. The supported types are `int`, `float`, `strin
     })
 
 
-# Binary encoding
+## Parsing JSONR
+
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments should be ignored.
+
+
+## Binary encoding
 
 The binary encoding uses the schema to avoid storing type information and field names in the binary data. TODO.
