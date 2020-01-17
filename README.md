@@ -31,7 +31,9 @@ JSONR is JSON, but with a friendlier syntax, simple to use schemas and efficient
 
 JSONR is great, but it has a number of pain points. 
 
-It's somewhat cumbersome to write JSON by hand due to the quotes around field names, lack of comments etc. 
+It's somewhat cumbersome to write JSON by hand due to the required quotes around field names and the inability to move things around in the file without editing commas. 
+
+The lack of comments means that you can't specify why something is like it is in a JSON configuration file.
 
 Projects that use JSON for configuration often have vague documentation, with example snippets of JSON you don't know where to put in your own configuration file, and no way to check if it's valid. 
 
@@ -39,7 +41,15 @@ For APIs, JSON files are quite wasteful, since field names are constantly repeat
 
 In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
 
-JSONR aims to remove all of these pain points.
+JSONR aims to remove all of these pain points, while strictly adhering to the JSON value model.
+
+
+# Why not YAML, TOML, XML?
+
+These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
+
+In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
+
 
 # Syntax and features
 
