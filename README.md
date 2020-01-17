@@ -56,7 +56,7 @@ In contrast, JSONR values and JSON values are one and the same, and the syntax i
 All JSON syntax is accepted, and all TON values are also JSON values. In addition:
 
  * Top level curly braces may be omitted
- * Double quotes around field names and strings matching `[A-Za-z_][A-Za-z0-9_]+` may be omitted
+ * Double quotes around field names and strings matching `[A-Za-z_][A-Za-z0-9_]*` may be omitted
  * Comments are allowed `# comments last until the end of the line` 
  * Commas are optional
  * TON files can be checked against a schema (defined in a separate TON file)
@@ -64,7 +64,17 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
-Exception to the double quote rule: `null`, `true` and `false` are the JSON values, not bare strings.
+
+   value = string | number | object | array | 'true' | 'false' | 'null'
+   number = json_number
+   string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
+   object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
+   array = '[' (value ','?)* ']'
+
+Exception to the string rule: `null`, `true` and `false` are the JSON values, not bare strings.
+
+The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
+
 
 ## Parameters
 
