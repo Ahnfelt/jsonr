@@ -82,9 +82,9 @@ Schemas are written in TON files. The supported types are `int`, `float`, `strin
     query: variant(of: {
         term: map(of: string())
         bool: object(of: {
-            must: array(of: type(url: "query"), default: [])
-            must_not: array(of: type(url: "query"), default: []),
-            should: array(of: type(url: "query"), default: []),
+            must: array(of: type(of: "query"), default: [])
+            must_not: array(of: type(of: "query"), default: []),
+            should: array(of: type(of: "query"), default: []),
             minimum_should_match: int(default: 1)
         }) 
         match_all: object(of: {})
