@@ -65,7 +65,9 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
 ```
-value = string | number | object | array | 'true' | 'false' | 'null'
+file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
+parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
+value = string | number | object | array | 'true' | 'false' | 'null' | parameter
 number = json_number
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
 object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
