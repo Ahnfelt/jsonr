@@ -109,8 +109,7 @@ A JSONR file consists of zero or more parameter definitions followed by either a
 ```
 file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
 parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
-value = string | number | object | array | 'true' | 'false' | 'null' | parameter
-number = json_number
+value = json_string | json_number | object | array | 'true' | 'false' | 'null' | parameter
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
 object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
 array = '[' (value ','?)* ']'
