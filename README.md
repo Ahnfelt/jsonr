@@ -116,7 +116,11 @@ array = '[' (value ','?)* ']'
 
 The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
 
-Variant shorthand examples: `foo()` => `{"foo": {}}`, `foo(x: 1, y: 2)` => `{"foo": {"x": 1, "y": 2}}`, `foo(42)` => `{"foo": 42}`.
+Variant shorthand examples: 
+
+ * `foo()` means `{"foo": {}}`
+ * `foo(x: 1, y: 2)` means `{"foo": {"x": 1, "y": 2}}`
+ * `foo(42)` means `{"foo": 42}`.
 
 
 ## Binary encoding
