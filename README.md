@@ -29,7 +29,7 @@ JSONR is JSON, but with a friendlier syntax, simple to use schemas and efficient
 
 ## Why?
 
-JSONR is great, but it has a number of pain points. 
+JSON is a great format, but it has a number of pain points. 
 
 It's somewhat cumbersome to write JSON by hand due to the required quotes around field names and the inability to move things around in the file without editing commas. 
 
