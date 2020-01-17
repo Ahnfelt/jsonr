@@ -64,10 +64,18 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
+## Parameters
+
+Parameters allow a JSONR file to be a template for e.g. configurations. They are declared in the top of the file with the syntax `$my_parameter: schema`, where `schema` is a JSONR schema, such as `string(default: "localhost")`. 
+
+After the parameter declarations, the parameters can be used everywhere a value is expected. They are replaced with the value of the parameter.
+
+When parsing a JSONR file with parameter declarations, a value for each parameter must be supplied, unless the parameter has a default value, in which case it's optional.
+
 
 ## Schemas
 
-Schemas are written in TON files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant` and `json`.
+Schemas are written in JSONR files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant`, `binary` and `json`.
 
     configuration: object(of: {
         title: string()
@@ -83,8 +91,8 @@ Schemas are written in TON files. The supported types are `int`, `float`, `strin
         term: map(of: string())
         bool: object(of: {
             must: array(of: type(of: "query"), default: [])
-            must_not: array(of: type(of: "query"), default: []),
-            should: array(of: type(of: "query"), default: []),
+            must_not: array(of: type(of: "query"), default: [])
+            should: array(of: type(of: "query"), default: [])
             minimum_should_match: int(default: 1)
         }) 
         match_all: object(of: {})
