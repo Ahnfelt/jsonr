@@ -6,8 +6,8 @@ JSONR is JSON, but with a friendlier syntax, simple to use schemas and efficient
 ## Example
 
     # This is a .jsonr file
-
-    $database_server: string(default: "localhost")
+    
+    $database_server: "localhost"
 
     path: "/tmp"
 
@@ -79,27 +79,33 @@ When parsing a JSONR file with parameter declarations, a value for each paramete
 
 Schemas are written in JSONR files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant`, `binary` and `json`.
 
-    configuration: object(of: {
-        title: string()
-        owner: object(of: {
-            name: string()
-            dob: object(of: {year: int(), month: int(), day: int()})
+    default: type(of: "configuration")
+    
+    types: {
+        configuration:  object(of: {
+            title: string()
+            owner: object(of: {
+                name: string()
+                dob: object(of: {year: int(), month: int(), day: int()})
+            })
+            query: type(of: "query")
+            body: string()
         })
-        query: type(of: "query")
-        body: string()
-    })
 
-    query: variant(of: {
-        term: map(of: string())
-        bool: object(of: {
-            must: array(of: type(of: "query"), default: [])
-            must_not: array(of: type(of: "query"), default: [])
-            should: array(of: type(of: "query"), default: [])
-            minimum_should_match: int(default: 1)
+        query: variant(of: {
+            term: map(of: string())
+            bool: type(of: "bool_query")
+            match_all: object(of: {})
+        })
+    
+        bool_query: object(of: {
+            must: array(of: type(of: "query"))
+            must_not: array(of: type(of: "query"))
+            should: array(of: type(of: "query"))
+            minimum_should_match: int()
         }) 
-        match_all: object(of: {})
-    })
-
+    }
+    
 
 ## Parsing JSONR
 
