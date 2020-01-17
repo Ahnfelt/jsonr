@@ -64,7 +64,6 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
-
 ## Parameters
 
 Parameters allow a JSONR file to be a template for e.g. configurations. They are declared in the top of the file with the syntax `$my_parameter: schema`, where `schema` is a JSONR schema, such as `string(default: "localhost")`. 
@@ -111,11 +110,13 @@ file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
 parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
 value = json_string | json_number | object | array | 'true' | 'false' | 'null' | parameter
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
+object = '{' (string ':' value ','?)* '}' | string '(' value | (string ':' value ','?)* ')'
 array = '[' (value ','?)* ']'
 ```
 
 The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
+
+Variant shorthand examples: `foo()` => `{"foo": {}}`, `foo(x: 1, y: 2)` => `{"foo": {"x": 1, "y": 2}}`, `foo(42)` => `{"foo": 42}`.
 
 
 ## Binary encoding
