@@ -104,7 +104,7 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
 
 ## Parsing JSONR
 
-A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments should be ignored.
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments and whitespace outside quoted strings should be ignored.
 
 ```
 file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
@@ -114,8 +114,6 @@ string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
 object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
 array = '[' (value ','?)* ']'
 ```
-
-Exception to the string rule: `null`, `true` and `false` are the JSON values, not bare strings.
 
 The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
 
