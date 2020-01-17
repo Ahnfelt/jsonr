@@ -79,10 +79,10 @@ When parsing a JSONR file with parameter declarations, a value for each paramete
 
 Schemas are written in JSONR files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant`, `binary` and `json`.
 
-    main: type(of: "configuration")
+    main: "configuration"
     
     types: {
-        configuration:  object(of: {
+        configuration: object(of: {
             title: string()
             owner: object(of: {
                 name: string()
