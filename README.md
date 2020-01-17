@@ -1,6 +1,6 @@
-#  JSON/Typed (.jsont)
+#  JSON Typed (.jsont)
 
-JSON/Typed is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
+JSON Typed is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
 
 ## Why?
 
@@ -14,7 +14,7 @@ For APIs, JSON files are quite wasteful, since field names are constantly repeat
 
 In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
 
-JSON/Typed aims to remove all of these pain points.
+JSON Typed aims to remove all of these pain points.
 
 ## Example
 
