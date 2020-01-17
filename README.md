@@ -64,20 +64,6 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
 
-```
-file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
-parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
-value = string | number | object | array | 'true' | 'false' | 'null' | parameter
-number = json_number
-string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
-array = '[' (value ','?)* ']'
-```
-
-Exception to the string rule: `null`, `true` and `false` are the JSON values, not bare strings.
-
-The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
-
 
 ## Parameters
 
@@ -119,6 +105,20 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
 ## Parsing JSONR
 
 A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments should be ignored.
+
+```
+file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
+parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
+value = string | number | object | array | 'true' | 'false' | 'null' | parameter
+number = json_number
+string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
+object = '{' (string ':' value ','?)* '}' | string '(' (string ':' value ','?)* ')'
+array = '[' (value ','?)* ']'
+```
+
+Exception to the string rule: `null`, `true` and `false` are the JSON values, not bare strings.
+
+The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
 
 
 ## Binary encoding
