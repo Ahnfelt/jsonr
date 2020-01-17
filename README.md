@@ -5,7 +5,7 @@ JSON X is JSON, but with a friendlier syntax, simple to use schemas and efficien
 
 ## Example
 
-    # This is a .json2 file
+    # This is a .jsonx file
 
     $database_server: string(default: "localhost")
 
