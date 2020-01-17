@@ -70,7 +70,7 @@ Parameters allow a JSONR file to be a template for e.g. configurations. They are
 
 After the parameter declarations, the parameters can be used everywhere a value is expected. They are replaced with the value of the parameter.
 
-It's possible to branch on parameters, using the syntax `$my_parameter(value1: 10, value2: 20, 30)`. This means that if `$my_parameter` is the string `"value1"`, return `10`. If it's `"value2"`, return `20`. Otherwise, return `30`. If there's no default case, it's an error to not hit one of the branches.
+It's possible to branch on parameters, using the syntax `$my_parameter(value1: 10, value2: 20)`. This means that if `$my_parameter` is the string `"value1"`, return `10`. Otherwise, if it's `"value2"`, return `20`. Otherwise, fail.
 
 When parsing a JSONR file with parameter declarations, a value for each parameter must be supplied, unless the parameter has a default value, in which case it's optional.
 
