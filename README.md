@@ -110,7 +110,7 @@ file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
 parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
 value = json_string | json_number | object | array | 'true' | 'false' | 'null' | parameter
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-object = '{' (string ':' value ','?)* '}' | string '(' value | (string ':' value ','?)* ')'
+object = '{' (string ':' value ','?)* '}' | string '(' (value | (string ':' value ','?)*) ')'
 array = '[' (value ','?)* ']'
 ```
 
