@@ -121,7 +121,7 @@ array = '[' {value [',']} ']'
 fields = {string ':' value [',']}
 ```
 
-Whitespace is as in JSON and comments begin with `#` and last to the end of the line `\n` (or to the end of the file, whichever comes first). Outside strings, both are ignored.
+Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively.
 
