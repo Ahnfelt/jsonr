@@ -62,17 +62,17 @@ All JSON syntax is accepted, and all TON values are also JSON values. In additio
  * TON files can be checked against a schema (defined in a separate TON file)
  * TON files with a schema has a simple and very compact binary encoding
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
- * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20, 30)`
+ * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20)`
 
 ## Parameters
 
-Parameters allow a JSONR file to be a template for e.g. configurations. They are declared in the top of the file with the syntax `$my_parameter: schema`, where `schema` is a JSONR schema, such as `string(default: "localhost")`. 
+Parameters allow a JSONR file to be a template for e.g. configurations. They are declared in the top of the file with the syntax `$my_parameter: default_value`, where `default_value` is the default value of the parameter. A parameter must not be declared twice. 
 
-After the parameter declarations, the parameters can be used everywhere a value is expected. They are replaced with the value of the parameter.
+Immediately after its declaration, a parameter can be used in place of a value. The value is then the value of the parameter.
 
 It's possible to branch on parameters, using the syntax `$my_parameter(value1: 10, value2: 20)`. This means that if `$my_parameter` is the string `"value1"`, return `10`. Otherwise, if it's `"value2"`, return `20`. Otherwise, fail.
 
-When parsing a JSONR file with parameter declarations, a value for each parameter must be supplied, unless the parameter has a default value, in which case it's optional.
+When parsing a JSONR file with parameter declarations, a map of parameter values may be supplied that is then used instead of the default value of the parameter declaration.
 
 
 ## Schemas
