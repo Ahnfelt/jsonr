@@ -1,6 +1,6 @@
 #  JSONR (.jsonr)
 
-JSONR is JSON, but with a friendlier syntax, simple to use schemas and efficient binary encoding.
+JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.
 
 
 ## Example
