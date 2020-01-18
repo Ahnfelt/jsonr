@@ -111,15 +111,15 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 
 | Type | Description |
 | :------ | :------------ |
-| `type(of: ...)` | A type defined somewhere in this or another schema |
 | `int()` | A 54 bit signed integer (see note) |
 | `float()` | A double precision floating point number |
 | `bool()` | Either `true` or `false` |
 | `string()` | A JSON string |
 | `array(of: ...)` | A JSON array with elements of the given type |
-| `object(of: ..., required: ...)` | A JSON object with the given fields, some of which may be required |
+| `object(of: ..., required: ..., other: ...)` | A JSON object with the given fields, some of which may be required. Other fields may be permitted of a given type |
 | `variant(object: ..., array: ...)` | A JSON object/array whose sole field/first element is one of the given options |
-| `any()` | Any JSON value |
+| `any(of: ...)` | Any JSON value, possibly constrainted to be of one of the given types |
+| `type(of: ...)` | A type defined somewhere in this or another schema |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
