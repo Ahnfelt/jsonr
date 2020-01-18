@@ -121,7 +121,7 @@ array = '[' {value [',']} ']'
 fields = {string ':' value [',']}
 ```
 
-The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
+The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively.
 
 |Variant shorthand|Equivalent JSON|
 | :------ | :------------ |
