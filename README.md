@@ -147,6 +147,8 @@ Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `
 
 If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
 
+A top level `_hints: {my_type: {...}, ...}`, which for a subset of the types gives key/value hints on how to represent the datatype in the programming language the consumes the file. The values are of type `any()`, and the interpretation is left up to each implementation.
+
 
 ## Parsing JSONR
 
