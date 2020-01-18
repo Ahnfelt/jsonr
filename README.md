@@ -130,8 +130,8 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 
 | Type | Description |
 | :------ | :------------ |
-| `int()` | A 54 bit signed integer (see note). The value can be constraint by specifying `minimum: ...` and/or `maximum: ...` |
-| `float()` | A double precision floating point number. The value can be constraint by specifying `minimum: ...` and/or `maximum: ...` |
+| `int()` | A 54 bit signed integer (see note). The value can be constrained by specifying `minimum: ...` and/or `maximum: ...` |
+| `float()` | A double precision floating point number. The value can be constrained by specifying `minimum: ...` and/or `maximum: ...` |
 | `bool()` | Either `true` or `false` |
 | `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. |
 | `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
