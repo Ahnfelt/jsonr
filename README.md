@@ -79,32 +79,28 @@ When parsing a JSONR file with parameter declarations, a map of parameter values
 
 Schemas are written in JSONR files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant`, `binary` and `any`.
 
-    main: "configuration"
-    
-    types: {
-        configuration: object(of: {
-            title: string()
-            owner: object(of: {
-                name: string()
-                dob: object(of: {year: int(), month: int(), day: int()})
-            })
-            query: type(of: "query")
-            body: string()
-        })
+    configuration: object(of: {
+        title: string()
+        owner: object(of: {
+            name: string()
+            dob: object(of: {year: int(), month: int(), day: int()}, required: ["year"])
+        }, required: ["name"])
+        query: type(of: "query")
+        body: string()
+    })
 
-        query: variant(of: {
-            term: map(of: string())
-            bool: type(of: "bool_query")
-            match_all: object(of: {})
-        })
+    query: variant(of: {
+        term: map(of: string())
+        bool: type(of: "bool_query")
+        match_all: object(of: {})
+    })
     
-        bool_query: object(of: {
-            must: array(of: type(of: "query"))
-            must_not: array(of: type(of: "query"))
-            should: array(of: type(of: "query"))
-            minimum_should_match: int()
-        }) 
-    }
+    bool_query: object(of: {
+        must: array(of: type(of: "query"))
+        must_not: array(of: type(of: "query"))
+        should: array(of: type(of: "query"))
+        minimum_should_match: int()
+    }) 
     
 
 ## Parsing JSONR
