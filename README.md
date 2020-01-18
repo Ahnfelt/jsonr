@@ -109,7 +109,7 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
 
 ## Parsing JSONR
 
-A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments and whitespace outside quoted strings should be ignored.
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments and whitespace outside strings are ignored.
 
 ```
 file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
