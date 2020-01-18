@@ -107,6 +107,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 
 | Type | Description |
 | :------ | :------------ |
+| `type(of: ...)` | A type defined somewhere in this or another schema |
 | `int()` | A 54 bit signed integer (see note) |
 | `float()` | A double precision floating point number |
 | `bool()` | Either `true` or `false` |
