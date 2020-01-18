@@ -85,7 +85,11 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
         title: string()
         owner: object(of: {
             name: string()
-            dob: object(of: {year: int(), month: int(), day: int()}, required: ["year"])
+            dob: object(of: {
+                year: int(), 
+                month: int(), 
+                day: int()
+            }, required: ["year", "month", "day"])
         }, required: ["name"])
         query: type(of: "query")
         body: string()
