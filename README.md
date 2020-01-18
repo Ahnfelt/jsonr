@@ -118,7 +118,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | `string()` | A JSON string |
 | `array(of: ...)` | A JSON array with elements of the given type |
 | `object(of: {...}, required: [...])` | A JSON object with the given fields, some of which may be required |
-| `variant(of: {...})` | An object whose sole field is one of the listed options |
+| `variant(object: ..., array: ...)` | A JSON object/array whose sole field/first element is one of the given options |
 | `any()` | Any JSON value |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
@@ -136,7 +136,7 @@ parameter = '$' string ['(' fields ')']
 value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
 object = '{' fields '}' | string '(' (value | fields) ')'
-array = '[' {value [',']} ']'
+array = string? '[' {value [',']} ']'
 fields = {string ':' value [',']}
 ```
 
@@ -147,6 +147,7 @@ The `json_number` and `json_string` rules are exactly as JSON numbers and JSON s
 | `foo()` | `{"foo": {}}` |
 | `foo(x: 1, y: 2)` | `{"foo": {"x": 1, "y": 2}}` | 
 | `foo(42)` | `{"foo": 42}` | 
+| `foo["hello", true]` | `["foo", "hello", true]` | 
 
 
 ## Binary encoding
