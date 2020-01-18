@@ -77,7 +77,9 @@ When parsing a JSONR file with parameter declarations, a map of parameter values
 
 ## Schemas
 
-Schemas are written in JSONR files. The supported types are `int`, `float`, `string`, `bool`, `array`, `object`, `map`, `variant`, `binary` and `any`.
+Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema.
+
+    _: "configuration"
 
     configuration: object(of: {
         title: string()
@@ -101,7 +103,23 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
         should: array(of: type(of: "query"))
         minimum_should_match: int()
     }) 
-    
+
+
+| Type | Description |
+| :------ | :------------ |
+| `int()` | A 54 bit signed integer (see note) |
+| `float()` | A double precision floating point number |
+| `bool()` | N/A |
+| `string()` | N/A |
+| `array(of: ...)` | N/A |
+| `object(of: ...)` | N/A |
+| `variant(of: ...)` | N/A |
+| `any()` | N/A |
+
+Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
+
+Currently a `binary` type is being considered for storing binary data (likely encoded as base64 in the textual format).
+
 
 ## Parsing JSONR
 
@@ -119,7 +137,7 @@ fields = {string ':' value [',']}
 
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
-|Variant shorthand|Equivalent JSON|
+| Variant shorthand | Equivalent JSON |
 | :------ | :------------ |
 | `foo()` | `{"foo": {}}` |
 | `foo(x: 1, y: 2)` | `{"foo": {"x": 1, "y": 2}}` | 
