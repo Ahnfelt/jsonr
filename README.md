@@ -75,6 +75,18 @@ It's possible to branch on parameters, using the syntax `$my_parameter(value1: 1
 When parsing a JSONR file with parameter declarations, a map of parameter values may be supplied that is then used instead of the default value of the parameter declaration.
 
 
+## Variants
+
+Variants, also known as tagged unions or sum types, are commonplace in data format specifications. It's a way to distinguish between multiple types by using a tag. There are two dominant ways to encode this in JSON: `{"tag": value}` and `["tag", value1, value2, ...]`. Unfortunately, it can be quite hard to read the resulting JSON. JSONR has syntactic sugar to make it readable.
+
+| Variant shorthand | Equivalent JSON |
+| :------ | :------------ |
+| `foo()` | `{"foo": {}}` |
+| `foo(x: 1, y: 2)` | `{"foo": {"x": 1, "y": 2}}` | 
+| `foo(42)` | `{"foo": 42}` | 
+| `foo["hello", true]` | `["foo", "hello", true]` | 
+
+
 ## Schemas
 
 Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema. The `_` field specifies the primary type of the schema.
@@ -118,6 +130,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
 | `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `other: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options. |
+| `binary()` | A binary type, encoded as base64. If `` |
 | `any()` | Any JSON value. If `of: ...` is specified, the value must adhere to one of the given types |
 | `type(of: ...)` | References a type defined in a schema by name |
 
@@ -126,8 +139,6 @@ Note: 54 bit integers fit accurately in a double precision floating point number
 Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `array: {tag1: [typeX, typeY, ...], tag2: ..., ...}`, but not both. 
 
 If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
-
-Currently a `binary` type is being considered for storing binary data, likely encoded as base64 in the textual format.
 
 
 ## Parsing JSONR
@@ -145,13 +156,6 @@ fields = {string ':' value [',']}
 ```
 
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
-
-| Variant shorthand | Equivalent JSON |
-| :------ | :------------ |
-| `foo()` | `{"foo": {}}` |
-| `foo(x: 1, y: 2)` | `{"foo": {"x": 1, "y": 2}}` | 
-| `foo(42)` | `{"foo": 42}` | 
-| `foo["hello", true]` | `["foo", "hello", true]` | 
 
 
 ## Binary encoding
