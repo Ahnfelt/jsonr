@@ -109,7 +109,7 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
 
 ## Parsing JSONR
 
-A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments and whitespace outside strings are ignored.
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. 
 
 ```
 file = {'$' string ':' value [',']} (value | fields)
@@ -121,9 +121,9 @@ array = '[' {value [',']} ']'
 fields = {string ':' value [',']}
 ```
 
-The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively.
+Whitespace is as in JSON and comments begin with `#` and last to the end of the line `\n`. Outside strings, both are ignored.
 
-Whitespace is as in JSON and comments start with `#` and last to the end of the line `\n`.
+The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively.
 
 |Variant shorthand|Equivalent JSON|
 | :------ | :------------ |
