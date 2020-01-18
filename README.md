@@ -123,6 +123,8 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
+Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `array: {tag1: [typeX, typeY, ...], tag2: ..., ...}`, but not both. 
+
 If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
 
 Currently a `binary` type is being considered for storing binary data, likely encoded as base64 in the textual format.
