@@ -23,7 +23,7 @@ JSONR is JSON, but with concise syntax, simpler schemas and efficient binary enc
       "bobcat"
     ]
 
-    query: term("Name": "Mike")
+    query: term("name": "Mike")
 
 
 ## Syntax
