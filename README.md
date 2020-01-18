@@ -109,12 +109,12 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | :------ | :------------ |
 | `int()` | A 54 bit signed integer (see note) |
 | `float()` | A double precision floating point number |
-| `bool()` | N/A |
-| `string()` | N/A |
-| `array(of: ...)` | N/A |
-| `object(of: ...)` | N/A |
-| `variant(of: ...)` | N/A |
-| `any()` | N/A |
+| `bool()` | Either `true` or `false` |
+| `string()` | A JSON string |
+| `array(of: ...)` | A JSON array with elements of the given type |
+| `object(of: ...)` | A JSON object with the given fields |
+| `variant(of: ...)` | An object whose sole field is one of the listed options |
+| `any()` | Any JSON value |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
