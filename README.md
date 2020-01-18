@@ -89,7 +89,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
                 year: int(), 
                 month: int(), 
                 day: int()
-            }, required: ["year", "month", "day"])
+            })
         }, required: ["name"])
         query: type(of: "query")
         body: string()
