@@ -64,6 +64,13 @@ All JSON syntax is accepted, and all JSONR values are also JSON values. In addit
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20)`
 
+
+## Implementations
+
+JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
+https://glitch.com/~jsonr
+
+
 ## Parameters
 
 Parameters allow a JSONR file to be a template for e.g. configurations. They are declared in the top of the file with the syntax `$my_parameter: default_value`, where `default_value` is the default value of the parameter. A parameter must not be declared twice. 
