@@ -154,4 +154,10 @@ A top level `_hints: {my_type: {...}, ...}` field may be given, which for a subs
 
 ## Binary encoding
 
-The binary encoding uses the schema to avoid storing type information and field names in the binary data. TODO.
+JSONR specifies a binary encoding for JSONR values (and thus also JSON values) that can be optionally used in place of the textual format to reduce space usage. 
+
+TODO. Goals:
+
+ * Avoid storing field names and other type information in the binary data by using the schema
+ * Be forward compatible, so that you can add e.g. optional fields to the schema and still parse older files
+ * Support zero-copy processing, where you can process the binary encoding directly without allocating additional memory
