@@ -86,8 +86,8 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
         owner: object(of: {
             name: string()
             dob: object(of: {
-                year: int(), 
-                month: int(), 
+                year: int()
+                month: int()
                 day: int()
             })
         }, required: ["name"])
@@ -95,7 +95,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
         body: string()
     })
 
-    query: variant(of: {
+    query: variant(object: {
         term: map(of: string())
         bool: type(of: "bool_query")
         match_all: object(of: {})
@@ -117,7 +117,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | `bool()` | Either `true` or `false` |
 | `string()` | A JSON string |
 | `array(of: ...)` | A JSON array with elements of the given type |
-| `object(of: {...}, required: [...])` | A JSON object with the given fields, some of which may be required |
+| `object(of: ..., required: ...)` | A JSON object with the given fields, some of which may be required |
 | `variant(object: ..., array: ...)` | A JSON object/array whose sole field/first element is one of the given options |
 | `any()` | Any JSON value |
 
