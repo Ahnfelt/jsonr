@@ -112,12 +112,13 @@ Schemas are written in JSONR files. The supported types are `int`, `float`, `str
 A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. Comments and whitespace outside strings are ignored.
 
 ```
-file = ('$' string ':' value ','?)* (value | (string ':' value ','?)*)
-parameter = '$' string ('(' (string ':' value ','?)* value? ')')?
-value = json_string | json_number | object | array | 'true' | 'false' | 'null' | parameter
+file = {'$' string ':' value [',']} (value | fields)
+parameter = '$' string ['(' fields ')']
+value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-object = '{' (string ':' value ','?)* '}' | string '(' (value | (string ':' value ','?)*) ')'
-array = '[' (value ','?)* ']'
+object = '{' fields '}' | string '(' (value | fields) ')'
+array = '[' {value [',']} ']'
+fields = {string ':' value [',']}
 ```
 
 The json_number and json_string rules are exactly as JSON numbers and JSON strings respectively.
