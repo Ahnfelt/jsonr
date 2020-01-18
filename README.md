@@ -53,14 +53,14 @@ In contrast, JSONR values and JSON values are one and the same, and the syntax i
 
 ## Syntax and features
 
-All JSON syntax is accepted, and all TON values are also JSON values. In addition:
+All JSON syntax is accepted, and all JSONR values are also JSON values. In addition:
 
  * Top level curly braces may be omitted
  * Double quotes around field names and strings matching `[A-Za-z_][A-Za-z0-9_]*` may be omitted
- * Comments are allowed `# comments last until the end of the line` 
+ * Comments are allowed: `# comments last until the end of the line` 
  * Commas are optional
- * TON files can be checked against a schema (defined in a separate TON file)
- * TON files with a schema has a simple and very compact binary encoding
+ * JSONR files can be checked against a schema (defined in a separate JSONR file)
+ * JSONR files with a schema has a simple and very compact binary encoding
  * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
  * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20)`
 
