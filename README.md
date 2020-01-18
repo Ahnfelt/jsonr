@@ -26,6 +26,28 @@ JSONR is JSON, but with concise syntax, simpler schemas and efficient binary enc
     query: term("Name": "Mike")
 
 
+## Syntax
+
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. 
+
+```
+file = {'$' string ':' value [',']} (value | fields)
+parameter = '$' string ['(' fields ')']
+value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
+string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
+object = '{' fields '}' | string '(' (value | fields) ')'
+array = string? '[' {value [',']} ']'
+fields = {string ':' value [',']}
+```
+
+The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
+
+
+## Implementations
+
+JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
+https://glitch.com/~jsonr
+
 
 ## Why?
 
@@ -49,26 +71,6 @@ JSONR aims to remove all of these pain points, while strictly adhering to the JS
 These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
 
 In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
-
-
-## Syntax and features
-
-All JSON syntax is accepted, and all JSONR values are also JSON values. In addition:
-
- * Top level curly braces may be omitted
- * Double quotes around field names and strings matching `[A-Za-z_][A-Za-z0-9_]*` may be omitted
- * Comments are allowed: `# comments last until the end of the line` 
- * Commas are optional
- * JSONR files can be checked against a schema (defined in a separate JSONR file)
- * JSONR files with a schema has a simple and very compact binary encoding
- * Typical sum type encoding such as `{"term": {"title": "hello"}}` has shorthand syntax `term(title: "hello")`
- * Parameters `$foo` are supported, as well as branching on their value `font_size: $font(big: 40, small: 20)`
-
-
-## Implementations
-
-JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
-https://glitch.com/~jsonr
 
 
 ## Parameters
@@ -148,23 +150,6 @@ Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `
 If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
 
 A top level `_hints: {my_type: {...}, ...}` field may be given, which for a subset of the types gives key/value hints on how to represent the datatype in the programming language that consumes the file. The values are of type `any()`, and the interpretation is left up to each implementation.
-
-
-## Parsing JSONR
-
-A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. 
-
-```
-file = {'$' string ':' value [',']} (value | fields)
-parameter = '$' string ['(' fields ')']
-value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
-string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
-object = '{' fields '}' | string '(' (value | fields) ')'
-array = string? '[' {value [',']} ']'
-fields = {string ':' value [',']}
-```
-
-The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
 
 ## Binary encoding
