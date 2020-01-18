@@ -77,7 +77,7 @@ When parsing a JSONR file with parameter declarations, a map of parameter values
 
 ## Schemas
 
-Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema.
+Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema. The `_` field specifies the primary type of the schema.
 
     _: "configuration"
 
@@ -111,19 +111,21 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 
 | Type | Description |
 | :------ | :------------ |
-| `int()` | A 54 bit signed integer (see note) |
-| `float()` | A double precision floating point number |
+| `int()` | A 54 bit signed integer (see note). The value can be constraint by specifying `minimum: ...` and/or `maximum: ...` |
+| `float()` | A double precision floating point number. The value can be constraint by specifying `minimum: ...` and/or `maximum: ...` |
 | `bool()` | Either `true` or `false` |
-| `string()` | A JSON string |
-| `array(of: ...)` | A JSON array with elements of the given type |
-| `object(of: ..., required: ..., other: ...)` | A JSON object with the given fields, some of which may be required. Other fields may be permitted of a given type |
-| `variant(object: ..., array: ...)` | A JSON object/array whose sole field/first element is one of the given options |
-| `any(of: ...)` | Any JSON value, possibly constrainted to be of one of the given types |
-| `type(of: ...)` | A type defined somewhere in this or another schema |
+| `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. |
+| `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
+| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `other: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type |
+| `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options. |
+| `any()` | Any JSON value. If `of: ...` is specified, the value must adhere to one of the given types |
+| `type(of: ...)` | References a type defined in a schema by name |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
-Currently a `binary` type is being considered for storing binary data (likely encoded as base64 in the textual format).
+If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
+
+Currently a `binary` type is being considered for storing binary data, likely encoded as base64 in the textual format.
 
 
 ## Parsing JSONR
