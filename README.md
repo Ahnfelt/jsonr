@@ -209,4 +209,4 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
  * Strings are followed by `x` UTF-8 bytes.
  * Binaries are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
-The encoding uses network byte order. 
+The encoding uses network byte order. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
