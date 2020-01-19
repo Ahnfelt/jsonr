@@ -135,21 +135,35 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | `int()` | A 54 bit signed integer (see note). The value can be constrained by specifying `minimum: ...` and/or `maximum: ...` |
 | `float()` | A double precision floating point number. The value can be constrained by specifying `minimum: ...` and/or `maximum: ...` |
 | `bool()` | Either `true` or `false` |
-| `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. |
+| `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. If `pattern: ...` is specified, the string must match that regular expression |
 | `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
-| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `other: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type |
+| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `other: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
+| `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
 | `binary()` | A data URL. If `mediatype: ...` is specified, base64 is assumed, and it's a plain base64 encoded value instead of a data URL |
 | `any()` | Any JSON value. If `of: ...` is specified, the value must adhere to one of the given types |
-| `type(of: ...)` | References a type defined in a schema by name |
+| `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
+All the types may specify `nullable: true`, which means that `null` is an accepted value as well.
+
 Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `array: {tag1: [typeX, typeY, ...], tag2: ..., ...}`, but not both. 
 
-If `of: ...` is specified in `any()`, no two options may accept the same JSON type (JSON types are number/string/bool/null/object/array).
+If `of: ...` is specified in `any()`, no two options may accept the same kind of JSON value (number/string/bool/null/object/array). If nullable, none of the types may accept `null`.
 
-A top level `_hints: {my_type: {...}, ...}` field may be given, which for a subset of the types gives key/value hints on how to represent the datatype in the programming language that consumes the file. The values are of type `any()`, and the interpretation is left up to each implementation.
+
+## Schema top level fields
+
+| Field | Description |
+| :------ | :------------ |
+| `_: ...` | Specifies the name of the primary type of the schema (required). |
+| `_imports: {my_name: "...", ...}` | Imports other schemas, giving them a name that can be used in the `schema` field of `type(...)`. |
+| `_documentation: {my_type: "...", ...}` | Documentation for each type in the schema. |
+| `_hints: {my_type: {...}, ...}` | Key/value hints on how to represent each type in programming languages. |
+| `_strings: ["...", ...]` | An array of up to 128 strings that are reserved and prepopulated in the binary encoding dictionary. |
+
+In the `_documentation` and `_hints` fields, the reserved key `_` is a documentation/hint entry for the schema itself.
 
 
 ## Binary encoding
