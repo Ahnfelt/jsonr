@@ -100,6 +100,8 @@ Variants, also known as tagged unions or sum types, are commonplace in data form
 
 Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema. The `_` field specifies the primary type of the schema.
 
+Example:
+
     _: "configuration"
 
     configuration: object(of: {
@@ -129,6 +131,7 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
         minimum_should_match: int()
     }) 
 
+Types:
 
 | Type | Description |
 | :------ | :------------ |
@@ -140,9 +143,9 @@ Schemas are written in JSONR files, and consist of zero or more fields. Fields t
 | `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `other: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
-| `binary()` | A data URL. If `mediatype: ...` is specified, base64 is assumed, and it's a plain base64 encoded value instead of a data URL |
+| `binary()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the ',' |
 | `any()` | Any JSON value. If `of: ...` is specified, the value must adhere to one of the given types |
-| `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name |
+| `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name, and `of: ...` becomes optional, defaulting to the primary type of the refernced schema |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
@@ -168,10 +171,42 @@ In the `_documentation` and `_hints` fields, the reserved key `_` is a documenta
 
 ## Binary encoding
 
-JSONR specifies a binary encoding for JSONR values (and thus also JSON values) that can be optionally used in place of the textual format to reduce space usage. 
+JSONR specifies a binary encoding for JSONR values (and thus also JSON values) that can be optionally used in place of the textual format to reduce space usage.
 
-TODO. Goals:
+It may be combined with a schema to reduce space usage further.
 
- * Avoid storing field names and other type information in the binary data by using the schema
- * Be forward compatible, so that you can add e.g. optional fields to the schema and still parse older files
- * Support zero-copy processing, where you can process the binary encoding directly without allocating additional memory
+A dictionary of the last 256 seen strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema.
+
+The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
+
+The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must be the bits `00000001`. Then comes a byte that is the number of reserved strings (max 128), and if non-zero, then the CRC-32 of those strings, in network byte order. The last thing in the file is the encoded value, described by the table below.
+
+| Bits | Description |
+| :------ | :------------ |
+| `1xxx xxxx` | Dictionary entry `x` |
+| `0111 0000 1xxx xxxx` | Dictionary entry `128+x` |
+| `0111 0001` | `null` |
+| `0111 0010` | `false` |
+| `0111 0011` | `true` |
+| `0111 0100 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Array of size `x` |
+| `0111 0101 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Object of size `x` |
+| `0111 0110 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | String of size `x` |
+| `0111 0111 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Binary of size `x` |
+| `0111 1100 xxxx xxxx xxxx xxxx` | Array of size `x` |
+| `0111 1101 xxxx xxxx xxxx xxxx` | Object of size `x` |
+| `0111 1110 xxxx xxxx xxxx xxxx` | String of size `x` |
+| `0111 1111 xxxx xxxx xxxx xxxx` | Binary of size `x` |
+| `0100 sxxx` | An integer `(-s)*x` |
+| `0101 0000 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | A single precision floating point number |
+| `0101 0001 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | A double precision floating point number |
+| `0000 xxxx` | Array of size `x` |
+| `0001 xxxx` | Object of size `x` |
+| `0010 xxxx` | String of size `x` |
+| `0011 xxxx` | Binary of size `x` |
+
+ * Arrays are followed by `x` values, each an element in the array.
+ * Objects are followed by `x*2` values, each pair a key/value in the object. The keys must be strings.
+ * Strings are followed by `x` UTF-8 bytes.
+ * Binaries are followed by string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If the string is empty, the mediatype must be specified by the schema.
+
+The encoding uses network byte order.
