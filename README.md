@@ -1,4 +1,4 @@
-## JSONR (.jsonr)
+# JSONR (.jsonr)
 
     # This is a .jsonr file
     
@@ -42,7 +42,7 @@ fields = {string ':' value [',']}
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
 
-## Why?
+# Why?
 
 JSON is a great format, but it has a number of pain points. 
 
@@ -66,11 +66,13 @@ These formats have complex syntaxes that are hard to parse, and they each deviat
 In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
 
 
-## JSONR implementations
+# JSONR implementations
 
 JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
 https://glitch.com/~jsonr
 
+
+# Features in the textual format
 
 ## Parameters
 
@@ -95,7 +97,7 @@ Variants, also known as tagged unions or sum types, are commonplace in data form
 | `foo["hello", true]` | `["foo", "hello", true]` | 
 
 
-## Schemas
+# Schemas
 
 Schemas are written in JSONR files, and consist of zero or more fields. Fields that start with `_` are reserved, and the rest of the fields each define a type in the schema. The `_` field specifies the primary type of the schema.
 
@@ -168,7 +170,7 @@ If `of: ...` is specified in `any()`, no two options may accept the same kind of
 In the `_documentation` and `_hints` fields, the reserved key `_` is a documentation/hint entry for the schema itself.
 
 
-## Binary encoding
+# Binary encoding
 
 JSONR specifies a binary encoding for JSONR values (and thus also JSON values) that can be optionally used in place of the textual format to reduce space usage.
 
