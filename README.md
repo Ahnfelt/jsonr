@@ -42,12 +42,6 @@ fields = {string ':' value [',']}
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
 
-## Implementations
-
-JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
-https://glitch.com/~jsonr
-
-
 ## Why?
 
 JSON is a great format, but it has a number of pain points. 
@@ -70,6 +64,12 @@ JSONR aims to remove all of these pain points, while strictly adhering to the JS
 These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
 
 In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
+
+
+## Implementations
+
+JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
+https://glitch.com/~jsonr
 
 
 ## Parameters
