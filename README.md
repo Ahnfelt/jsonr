@@ -1,4 +1,4 @@
-## JSONR example
+## JSONR (.jsonr)
 
     # This is a .jsonr file
     
