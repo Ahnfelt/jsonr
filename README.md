@@ -1,6 +1,4 @@
-![JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.](https://repository-images.githubusercontent.com/234411191/97ebc200-3ac5-11ea-9ced-272a44d3bbff)
-
-## Example
+## JSONR example
 
     # This is a .jsonr file
     
@@ -22,6 +20,7 @@
 
     query: term("name": "Mike")
 
+![JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.](https://repository-images.githubusercontent.com/234411191/97ebc200-3ac5-11ea-9ced-272a44d3bbff)
 
 ## Syntax
 
