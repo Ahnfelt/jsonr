@@ -184,28 +184,28 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 | Bits | Description |
 | :------ | :------------ |
 | `1xxx xxxx` | Dictionary entry `x` |
-| `0111 0000 1xxx xxxx` | Dictionary entry `128+x` |
+| `0111 0000  1xxx xxxx` | Dictionary entry `128+x` |
 | `0111 0001` | `null` |
 | `0111 0010` | `false` |
 | `0111 0011` | `true` |
-| `0111 0100 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Array of size `x` |
-| `0111 0101 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Object of size `x` |
-| `0111 0110 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | String of size `x` |
-| `0111 0111 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | Binary of size `x` |
-| `0111 1100 xxxx xxxx xxxx xxxx` | Array of size `x` |
-| `0111 1101 xxxx xxxx xxxx xxxx` | Object of size `x` |
-| `0111 1110 xxxx xxxx xxxx xxxx` | String of size `x` |
-| `0111 1111 xxxx xxxx xxxx xxxx` | Binary of size `x` |
+| `0111 0100  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
+| `0111 0101  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Object of size `x` |
+| `0111 0110  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | String of size `x` |
+| `0111 0111  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Binary of size `x` |
+| `0111 1100  xxxx xxxx  xxxx xxxx` | Array of size `x` |
+| `0111 1101  xxxx xxxx  xxxx xxxx` | Object of size `x` |
+| `0111 1110  xxxx xxxx  xxxx xxxx` | String of size `x` |
+| `0111 1111  xxxx xxxx  xxxx xxxx` | Binary of size `x` |
 | `0100 sxxx` | An integer `x` with sign bit `s` |
-| `0101 0000 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | A single precision floating point number `x` |
-| `0101 0001 xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx` | A double precision floating point number `x` |
+| `0101 0000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
+| `0101 0001  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision floating point number `x` |
 | `0000 xxxx` | Array of size `x` |
 | `0001 xxxx` | Object of size `x` |
 | `0010 xxxx` | String of size `x` |
 | `0011 xxxx` | Binary of size `x` |
 
  * Arrays are followed by `x` values, each an element in the array.
- * Objects are followed by `x*2` values, each pair a key/value in the object. The keys must be strings.
+ * Objects are followed by `2*x` values, each pair a key/value in the object. The keys must be strings.
  * Strings are followed by `x` UTF-8 bytes.
  * Binaries are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
