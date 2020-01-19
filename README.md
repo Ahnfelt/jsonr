@@ -141,7 +141,7 @@ Types:
 | `bool()` | Either `true` or `false` |
 | `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. If `pattern: ...` is specified, the string must match that regular expression |
 | `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
-| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields |
+| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields. If `order: [...]` is specified, it defines an order amongst the fields |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
 | `binary()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the ',' |
@@ -184,8 +184,9 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 
 | Bits | Description |
 | :------ | :------------ |
-| `1xxx xxxx` | Dictionary entry `x` |
-| `0111 0000  1xxx xxxx` | Dictionary entry `128+x` |
+| `10xx xxxx` | Non-negative integer `x` |
+| `11xx xxxx` | Dictionary entry `x` |
+| `0111 0000  xxxx xxxx` | Dictionary entry `x` |
 | `0111 0001` | `null` |
 | `0111 0010` | `false` |
 | `0111 0011` | `true` |
@@ -197,7 +198,7 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 | `0111 1101  xxxx xxxx  xxxx xxxx` | Object of size `x` |
 | `0111 1110  xxxx xxxx  xxxx xxxx` | String of size `x` |
 | `0111 1111  xxxx xxxx  xxxx xxxx` | Binary of size `x` |
-| `0100 sxxx` | An integer `x` with sign bit `s` |
+| `0100 xxxx` | Integer `-x-1` |
 | `0101 0000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
 | `0101 0001  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision floating point number `x` |
 | `0000 xxxx` | Array of size `x` |
@@ -206,7 +207,7 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 | `0011 xxxx` | Binary of size `x` |
 
  * Arrays are followed by `x` values, each an element in the array.
- * Objects are followed by `2*x` values, each pair a key/value in the object. The keys must be strings.
+ * Objects are followed by `2*x` values, each pair a key/value in the object. If the schema doesn't specify `order: [...]` for the object, the keys must be strings. Otherwise, the first of the keys may be non-negative integers, encoded as `10xx xxxx`. These keys index into the `order: [...]` array to find the field they correspond to, and they must occur in that order (gaps are OK).
  * Strings are followed by `x` UTF-8 bytes.
  * Binaries are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
