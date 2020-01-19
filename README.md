@@ -66,7 +66,7 @@ These formats have complex syntaxes that are hard to parse, and they each deviat
 In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
 
 
-## Implementations of JSONR
+## JSONR implementations
 
 JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
 https://glitch.com/~jsonr
