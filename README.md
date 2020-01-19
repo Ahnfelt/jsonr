@@ -175,7 +175,7 @@ JSONR specifies a binary encoding for JSONR values (and thus also JSON values) t
 
 It may be combined with a schema to reduce space usage further.
 
-A dictionary of the last 256 seen strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema. The unreserved entries are sorted so that the most recently strings come first. Strings leave the dictionary when they get an index >= 256 due to more recently seen strings.
+A dictionary of the last 256 seen non-empty strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema. The unreserved entries are sorted so that the most recently strings come first. Strings leave the dictionary when they get an index >= 256 due to more recently seen strings.
 
 The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
 
@@ -207,6 +207,6 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `x*2` values, each pair a key/value in the object. The keys must be strings.
  * Strings are followed by `x` UTF-8 bytes.
- * Binaries are followed by string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If the string is empty, the mediatype must be specified by the schema.
+ * Binaries are followed by string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If the string is empty, the mediatype must be specified by the schema. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
-The encoding uses network byte order.
+The encoding uses network byte order. 
