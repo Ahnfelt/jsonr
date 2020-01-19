@@ -198,7 +198,7 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 | `0111 1101  xxxx xxxx  xxxx xxxx` | Object of size `x` |
 | `0111 1110  xxxx xxxx  xxxx xxxx` | String of size `x` |
 | `0111 1111  xxxx xxxx  xxxx xxxx` | Binary of size `x` |
-| `0100 xxxx` | Integer `-x-1` |
+| `0100 xxxx` | Negative integer `(-x)-1` |
 | `0101 0000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
 | `0101 0001  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision floating point number `x` |
 | `0000 xxxx` | Array of size `x` |
