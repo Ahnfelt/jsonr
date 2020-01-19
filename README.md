@@ -144,7 +144,7 @@ Types:
 | `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields. If `order: [...]` is specified, it defines an order amongst the fields |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
-| `data()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the ',' |
+| `data()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the `,` |
 | `any()` | Any JSON value |
 | `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name, and `of: ...` becomes optional, defaulting to the primary type of the refernced schema |
 
