@@ -145,16 +145,14 @@ Types:
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
 | `binary()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the ',' |
-| `any()` | Any JSON value. If `of: ...` is specified, the value must adhere to one of the given types |
+| `any()` | Any JSON value |
 | `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name, and `of: ...` becomes optional, defaulting to the primary type of the refernced schema |
 
 Note: 54 bit integers fit accurately in a double precision floating point number, and are thus easily consumable in languages such as JavaScript and Lua.
 
-All the types may specify `nullable: true`, which means that `null` is an accepted value as well.
+All the types may specify `nullable: true`, which means that `null` is an accepted value as well. The exception is `any()`, which is always nullable.
 
 Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `array: {tag1: [typeX, typeY, ...], tag2: ..., ...}`, but not both. 
-
-If `of: ...` is specified in `any()`, no two options may accept the same kind of JSON value (number/string/bool/null/object/array). If nullable, none of the types may accept `null`.
 
 
 ## Schema top level fields
