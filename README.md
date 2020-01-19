@@ -175,7 +175,7 @@ JSONR specifies a binary encoding for JSONR values (and thus also JSON values) t
 
 It may be combined with a schema to reduce space usage further.
 
-A dictionary of the last 256 seen strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema.
+A dictionary of the last 256 seen strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema. The unreserved entries are sorted so that the most recently strings come first. Strings leave the dictionary when they get an index >= 256 due to more recently seen strings.
 
 The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
 
