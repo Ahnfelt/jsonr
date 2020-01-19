@@ -207,7 +207,7 @@ The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR 
 | `0011 xxxx` | Binary of size `x` |
 
  * Arrays are followed by `x` values, each an element in the array.
- * Objects are followed by `2*x` values, each pair a key/value in the object. If the schema doesn't specify `order: [...]` for the object, the keys must be strings. Otherwise, the first of the keys may be non-negative integers, encoded as `10xx xxxx`. These keys index into the `order: [...]` array to find the field they correspond to, and they must occur in that order (gaps are OK).
+ * Objects are followed by `2*x` values, each pair a key/value in the object. If the schema doesn't specify `order: [...]` for the object, the keys must be strings. Otherwise, the first of the keys may be non-negative integers, encoded as `10xx xxxx`. These keys index into the `order: [...]` array to find the field they correspond to, and they must occur in that order. Gaps are OK.
  * Strings are followed by `x` UTF-8 bytes.
  * Binaries are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
