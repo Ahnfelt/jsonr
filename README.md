@@ -206,11 +206,13 @@ The last thing in the file is the encoded value, described by the table below.
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
-| `1101 0011  (then 32 bits of x)` | A single precision floating point number `x` |
-| `1101 0100  (then 64 bits of x)` | A double precision | `1001 1000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
-| `1101 0101  (then 48 bits of x)` | Object of size `x` |
-| `1101 0110  (then 48 bits of x)` | String of size `x` |
-| `1101 0111  (then 48 bits of x)` | Data of size `x` |
+| `1101 0100  (then 16 bits of x)` | A half precision floating point number `x` |
+| `1101 0101  (then 32 bits of x)` | A single precision floating point number `x` |
+| `1101 0110  (then 64 bits of x)` | A double precision floating point number `x` |
+| `1101 0111 0000 xxxx (then 48 more bits of x)` | Array of size `x` |
+| `1101 0111 0001 xxxx (then 48 more bits of x)` | Object of size `x` |
+| `1101 0111 0010 xxxx (then 48 more bits of x)` | String of size `x` |
+| `1101 0111 0011 xxxx (then 48 more bits of x)` | Data of size `x` |
 | `1101 1000  (then 16 bits of x)` | Array of size `x` |
 | `1101 1001  (then 16 bits of x)` | Object of size `x` |
 | `1101 1010  (then 16 bits of x)` | String of size `x` |
