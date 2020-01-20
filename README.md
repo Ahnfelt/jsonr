@@ -142,7 +142,7 @@ Types:
 | `bool()` | Either `true` or `false` |
 | `string()` | A JSON string. If `of: ...` is specified, it must be one of the given strings. If `pattern: ...` is specified, the string must match that regular expression |
 | `array(of: ...)` | A JSON array with elements of the given type. If `omit: true` is specified, a non-array value is also accepted as if it was a single element array of that value. |
-| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields. If `order: [...]` is specified, it defines an order amongst the fields |
+| `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields. |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
 | `data()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the `,` |
@@ -160,11 +160,11 @@ Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `
 
 | Field | Description |
 | :------ | :------------ |
-| `_: ...` | Specifies the name of the primary type of the schema (required). |
-| `_imports: {my_name: "...", ...}` | Imports other schemas, giving them a name that can be used in the `schema` field of `type(...)`. |
-| `_documentation: {my_type: "...", ...}` | Documentation for each type in the schema. |
-| `_hints: {my_type: {...}, ...}` | Key/value hints on how to represent each type in programming languages. |
-| `_strings: ["...", ...]` | An array of up to 128 strings that are reserved and prepopulated in the binary encoding dictionary. |
+| `_: ...` | Specifies the name of the primary type of the schema (required) |
+| `_imports: {my_name: "...", ...}` | Imports other schemas, giving them a name that can be used in the `schema` field of `type(...)` |
+| `_documentation: {my_type: "...", ...}` | Documentation for each type in the schema |
+| `_hints: {my_type: {...}, ...}` | Key/value hints on how to represent each type in programming languages |
+| `_strings: ["...", ...]` | An array of up to 1024 strings of at most 128 bytes each for the static dictionary in the binary serialization |
 
 In the `_documentation` and `_hints` fields, the reserved key `_` is a documentation/hint entry for the schema itself.
 
@@ -175,38 +175,54 @@ JSONR specifies a binary encoding for JSONR values (and thus also JSON values) t
 
 It may be combined with a schema to reduce space usage further.
 
-A dictionary of the last 256 seen non-empty strings of length 255 or less is maintained by the encoder and decoder, to avoid repeating common strings such as field names in the encoding. Up to 128 of the lower entries in the dictionary may be reserved by the `_strings` field in the schema. The unreserved entries are sorted so that the most recently strings come first. Strings leave the dictionary when they get an index >= 256 due to more recently seen strings.
-
 The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
 
-The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must be the bits `00000001`. Then comes a byte that is the number of reserved strings (max 128), and if non-zero, then the CRC-32 of those strings, in network byte order. The last thing in the file is the encoded value, described by the table below.
+
+## Dictionaries
+
+| Dictionary | Description |
+| :------ | :------------ |
+| Static dictionary | Populated by the `_strings` field in the schema (if any) |
+| Dynamic dictionary | The 128 most recently encountered strings |
+
+The static dictionary consists of at most 1024 strings of at most 128 bytes each.
+
+The dynamic dictionary ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with single character strings for each of the 128 ASCII codes.
+
+
+## Header
+
+The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes a two bytes that is the number of static dictionary entries (max 1024), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
+
+The last thing in the file is the encoded value, described by the table below.
+
+
+## Value encoding
 
 | Bits | Description |
 | :------ | :------------ |
-| `10xx xxxx` | Non-negative integer `x` |
-| `11xx xxxx` | Dictionary entry `x` |
-| `0111 0000  xxxx xxxx` | Dictionary entry `x` |
-| `0111 0001` | `null` |
-| `0111 0010` | `false` |
-| `0111 0011` | `true` |
-| `0111 0100  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
-| `0111 0101  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Object of size `x` |
-| `0111 0110  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | String of size `x` |
-| `0111 0111  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Data of size `x` |
-| `0111 1100  xxxx xxxx  xxxx xxxx` | Array of size `x` |
-| `0111 1101  xxxx xxxx  xxxx xxxx` | Object of size `x` |
-| `0111 1110  xxxx xxxx  xxxx xxxx` | String of size `x` |
-| `0111 1111  xxxx xxxx  xxxx xxxx` | Data of size `x` |
-| `0100 xxxx` | Negative integer `(-x)-1` |
-| `0101 0000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
-| `0101 0001  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision floating point number `x` |
-| `0000 xxxx` | Array of size `x` |
-| `0001 xxxx` | Object of size `x` |
-| `0010 xxxx` | String of size `x` |
-| `0011 xxxx` | Data of size `x` |
+| `0xxx xxxx` | Dynamic dictionary entry `x` |
+| `10xx xxxx` | Integer `x-16` |
+| `1101 0000` | `null` |
+| `1101 0001` | `false` |
+| `1101 0010` | `true` |
+| `1101 0011  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
+| `1101 0100  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision | `1001 1000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
+| `1101 0101  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Object of size `x` |
+| `1101 0110  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | String of size `x` |
+| `1101 0111  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Data of size `x` |
+| `1101 1000  xxxx xxxx  xxxx xxxx` | Array of size `x` |
+| `1101 1001  xxxx xxxx  xxxx xxxx` | Object of size `x` |
+| `1101 1010  xxxx xxxx  xxxx xxxx` | String of size `x` |
+| `1101 1011  xxxx xxxx  xxxx xxxx` | Data of size `x` |
+| `1101 11xx  xxxx xxxx` | Static dictionary entry `x` |
+| `1110 0xxx` | Array of size `x` |
+| `1110 1xxx` | Object of size `x` |
+| `1111 0xxx` | String of size `x` |
+| `1111 1xxx` | Data of size `x` |
 
  * Arrays are followed by `x` values, each an element in the array.
- * Objects are followed by `2*x` values, each pair a key/value in the object. If the schema doesn't specify `order: [...]` for the object, the keys must be strings. Otherwise, the keys may instead be non-negative integers, encoded as `10xx xxxx`. These keys index into the `order: [...]` array to find the field they correspond to, and they must occur in that order, possibly with gaps.
+ * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary keys are used, those keys must come in ascending order of static dictionary index.
  * Strings are followed by `x` UTF-8 bytes.
  * Datas are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
 
