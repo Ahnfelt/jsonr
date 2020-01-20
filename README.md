@@ -229,6 +229,6 @@ The last thing in the file is the encoded value, described by the table below.
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary keys are used, those keys must come in ascending order of static dictionary index.
  * Strings are followed by `x` UTF-8 bytes.
- * Datas are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionary on the same terms as all other strings.
+ * Datas are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
 The encoding uses network byte order. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
