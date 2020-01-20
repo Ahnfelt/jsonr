@@ -20,14 +20,10 @@
 
     query: term("name": "Mike")
 
-## Banner
-
-![JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.](https://repository-images.githubusercontent.com/234411191/97ebc200-3ac5-11ea-9ced-272a44d3bbff)
-
 
 ## Syntax
 
-A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. 
+A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. The EBNF grammar is as follows:
 
 ```
 file = {'$' string ':' value [',']} (value | fields)
@@ -40,6 +36,11 @@ fields = {string ':' value [',']}
 ```
 
 The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
+
+
+## Banner
+
+![JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.](https://repository-images.githubusercontent.com/234411191/97ebc200-3ac5-11ea-9ced-272a44d3bbff)
 
 
 # Why?
