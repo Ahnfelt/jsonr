@@ -164,7 +164,7 @@ Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `
 | `_imports: {my_name: "...", ...}` | Imports other schemas, giving them a name that can be used in the `schema` field of `type(...)` |
 | `_documentation: {my_type: "...", ...}` | Documentation for each type in the schema |
 | `_hints: {my_type: {...}, ...}` | Key/value hints on how to represent each type in programming languages |
-| `_strings: ["...", ...]` | An array of up to 1024 strings of at most 64 UTF-8 bytes each for the static dictionary in the binary serialization |
+| `_strings: ["...", ...]` | An array of up to 2048 strings of at most 64 UTF-8 bytes each for the static dictionary in the binary serialization |
 
 In the `_documentation` and `_hints` fields, the reserved key `_` is a documentation/hint entry for the schema itself.
 
@@ -185,14 +185,14 @@ The format is **forward compatible**, meaning you can add optional fields to the
 | Static dictionary | Populated by the `_strings` field in the schema (if any) |
 | Dynamic dictionary | The 128 most recently encountered strings |
 
-The static dictionary consists of at most 1024 strings of at most 64 bytes each.
+The static dictionary consists of up to 2048 strings of at most 64 bytes each.
 
 The dynamic dictionary ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with single character strings for each of the 128 ASCII codes.
 
 
 ## Header
 
-The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes two bytes that is the number of static dictionary entries (max 1024), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
+The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes two bytes that is the number of static dictionary entries (max 2048), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
 
 The last thing in the file is the encoded value, described by the table below.
 
@@ -203,8 +203,8 @@ The last thing in the file is the encoded value, described by the table below.
 | :------ | :------------ |
 | `0xxx xxxx` | Dynamic dictionary entry `x` |
 | `10xx xxxx` | Integer `x-16` |
-| `1100 0xxx  xxxx xxxx` | An 11 bit non-negative integer `x+1008` |
-| `1100 10xx  xxxx xxxx` | Static dictionary entry `x` |
+| `1100 0xxx  xxxx xxxx` | Static dictionary entry `x` |
+| `1100 1xxx  xxxx xxxx` | An 11 bit non-negative integer `x+1008` |
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
