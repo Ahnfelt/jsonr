@@ -192,7 +192,7 @@ The dynamic dictionary ignores empty strings and strings that are longer than 12
 
 ## Header
 
-The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes a two bytes that is the number of static dictionary entries (max 1024), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
+The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes two bytes that is the number of static dictionary entries (max 1024), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
 
 The last thing in the file is the encoded value, described by the table below.
 
