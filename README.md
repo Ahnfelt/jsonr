@@ -164,7 +164,7 @@ Variant types must specify either `object: {tag1: typeA, tag2: typeB, ...}` or `
 | `_imports: {my_name: "...", ...}` | Imports other schemas, giving them a name that can be used in the `schema` field of `type(...)` |
 | `_documentation: {my_type: "...", ...}` | Documentation for each type in the schema |
 | `_hints: {my_type: {...}, ...}` | Key/value hints on how to represent each type in programming languages |
-| `_strings: ["...", ...]` | An array of up to 1024 strings of at most 128 bytes each for the static dictionary in the binary serialization |
+| `_strings: ["...", ...]` | An array of up to 1024 strings of at most 64 UTF-8 bytes each for the static dictionary in the binary serialization |
 
 In the `_documentation` and `_hints` fields, the reserved key `_` is a documentation/hint entry for the schema itself.
 
@@ -185,7 +185,7 @@ The format is **forward compatible**, meaning you can add optional fields to the
 | Static dictionary | Populated by the `_strings` field in the schema (if any) |
 | Dynamic dictionary | The 128 most recently encountered strings |
 
-The static dictionary consists of at most 1024 strings of at most 128 bytes each.
+The static dictionary consists of at most 1024 strings of at most 64 bytes each.
 
 The dynamic dictionary ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with single character strings for each of the 128 ASCII codes.
 
