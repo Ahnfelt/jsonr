@@ -206,16 +206,16 @@ The last thing in the file is the encoded value, described by the table below.
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
-| `1101 0011  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A single precision floating point number `x` |
-| `1101 0100  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | A double precision | `1001 1000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
-| `1101 0101  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Object of size `x` |
-| `1101 0110  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | String of size `x` |
-| `1101 0111  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Data of size `x` |
-| `1101 1000  xxxx xxxx  xxxx xxxx` | Array of size `x` |
-| `1101 1001  xxxx xxxx  xxxx xxxx` | Object of size `x` |
-| `1101 1010  xxxx xxxx  xxxx xxxx` | String of size `x` |
-| `1101 1011  xxxx xxxx  xxxx xxxx` | Data of size `x` |
-| `1101 11xx  xxxx xxxx` | Static dictionary entry `x` |
+| `1101 0011  (then 32 bits of x)` | A single precision floating point number `x` |
+| `1101 0100  (then 64 bits of x)` | A double precision | `1001 1000  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx  xxxx xxxx` | Array of size `x` |
+| `1101 0101  (then 48 bits of x)` | Object of size `x` |
+| `1101 0110  (then 48 bits of x)` | String of size `x` |
+| `1101 0111  (then 48 bits of x)` | Data of size `x` |
+| `1101 1000  (then 16 bits of x)` | Array of size `x` |
+| `1101 1001  (then 16 bits of x)` | Object of size `x` |
+| `1101 1010  (then 16 bits of x)` | String of size `x` |
+| `1101 1011  (then 16 bits of x)` | Data of size `x` |
+| `1101 11xx  (then 8 more bits of x)` | Static dictionary entry `x` |
 | `1110 0xxx` | Array of size `x` |
 | `1110 1xxx` | Object of size `x` |
 | `1111 0xxx` | String of size `x` |
