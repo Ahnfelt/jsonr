@@ -28,7 +28,9 @@
  * Optional schema types for validation and faster binary encoding/decoding.
  
 
-## Syntax
+## Tiny syntax
+
+The JSONR specification is designed to be easy to implement.
 
 A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. The EBNF grammar is as follows:
 
