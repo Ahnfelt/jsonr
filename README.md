@@ -52,36 +52,6 @@ The `json_number` and `json_string` rules are exactly as JSON numbers and JSON s
 ![JSONR is JSON, but with concise syntax, simpler schemas and efficient binary encoding.](https://repository-images.githubusercontent.com/234411191/97ebc200-3ac5-11ea-9ced-272a44d3bbff)
 
 
-# Why?
-
-JSON is a great format, but it has a number of pain points. 
-
-It's somewhat cumbersome to write JSON by hand due to the required quotes around field names and the inability to move things around in the file without editing commas. 
-
-The lack of comments means that you can't specify why something is like it is in a JSON configuration file.
-
-Projects that use JSON for configuration often have vague documentation, with example snippets of JSON you don't know where to put in your own configuration file, and no way to check if it's valid. 
-
-For APIs, JSON files are quite wasteful, since field names are constantly repeated.
-
-In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
-
-JSONR aims to remove all of these pain points, while strictly adhering to the JSON value model.
-
-
-## Why not YAML, TOML, XML?
-
-These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
-
-In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
-
-
-# JSONR implementations
-
-JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
-https://glitch.com/~jsonr
-
-
 # Features in the textual format
 
 ## Parameters
@@ -105,6 +75,38 @@ Variants, also known as tagged unions or sum types, are commonplace in data form
 | `foo(x: 1, y: 2)` | `{"foo": {"x": 1, "y": 2}}` | 
 | `foo(42)` | `{"foo": 42}` | 
 | `foo["hello", true]` | `["foo", "hello", true]` | 
+
+
+# JSONR implementations
+
+JSONR is very new and very much in progress, but there's already an impelementation being fleshed out by `somebody1234`:
+https://glitch.com/~jsonr
+
+
+# Why?
+
+JSON is a great format, but it has a number of pain points. 
+
+It's somewhat cumbersome to write JSON by hand due to the required quotes around field names and the inability to move things around in the file without editing commas. 
+
+The lack of comments means that you can't specify why something is like it is in a JSON configuration file.
+
+Projects that use JSON for configuration often have vague documentation, with example snippets of JSON you don't know where to put in your own configuration file, and no way to check if it's valid. 
+
+For APIs, JSON files are quite wasteful, since field names are constantly repeated.
+
+In addition, it's common to end up with a bunch of configuration files that are tiny variations of each other for slightly different use cases.
+
+JSONR aims to remove all of these pain points, while strictly adhering to the JSON value model.
+
+
+## Why not YAML, TOML, XML?
+
+These formats have complex syntaxes that are hard to parse, and they each deviate from the simple JSON value model. 
+
+In contrast, JSONR values and JSON values are one and the same, and the syntax is a conservative extension of JSON.
+
+Additionally, in JSONR the schema and the binary encoding works together for a simple, compact, efficient encoding.
 
 
 # Schemas
