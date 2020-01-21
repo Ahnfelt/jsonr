@@ -26,7 +26,7 @@
 
  * A concise textual format that that becomes plain JSON when parsed.
  * A single format that encompasses both JSON, JSONR and a binary encoding.
- * Optional schema types for validation and faster binary encoding/decoding.
+ * Optional schema types for validation, as well as faster binary encoding/decoding.
  
 
 ## Tiny syntax
@@ -157,7 +157,7 @@ Types:
 | `object(of: ...)` | A JSON object with the given fields. If `required: [...]` is specified, only those fields are required. If `map: ...` is specified, arbitrary other fields may be specified as long as their values adhere to the given type, and `of: ...` is then optional. If `nulls: true` is specified, 'null' is also an accepted value for the optional fields. |
 | `variant()` | If `object: {...}` is specified, a JSON object whose sole field is one of the given options. If `array: {...}` is specified, a JSON array whose first element is one of the given options |
 | `tuple(of: ...)` | An array with elements of different types in the order specified. If `required: n` is specified, only the first `n` elements are required |
-| `data()` | A data URL. If `mediatype: ...` is specified (suffixed with `;base64` if applicable), the value must only include the part after the `,` |
+| `data()` | A data URL |
 | `any()` | Any JSON value |
 | `type(of: ...)` | References a type defined in a schema by name. If `schema: ...` is specified, the type is pulled from the schema imported by the specified name, and `of: ...` becomes optional, defaulting to the primary type of the refernced schema |
 
@@ -239,6 +239,6 @@ The last thing in the file is the encoded value, described by the table below.
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
  * Strings are followed by `x` UTF-8 bytes.
- * Datas are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
+ * Datas are followed by a string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
 The encoding uses network byte order. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
