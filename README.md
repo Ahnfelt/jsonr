@@ -24,7 +24,7 @@
 
 ## What is JSONR?
 
- * A readable textual format that that becomes plain JSON when parsed.
+ * A concise textual format that that becomes plain JSON when parsed.
  * A single format that encompasses both JSON, JSONR and a binary encoding.
  * Optional schema types for validation and faster binary encoding/decoding.
  
