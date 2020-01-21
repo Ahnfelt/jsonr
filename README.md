@@ -18,6 +18,7 @@
         "bobcat"
     ]
 
+    # Shorthand syntax for variants
     query: term("name": "Mike")
 
 
