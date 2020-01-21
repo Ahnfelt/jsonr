@@ -7,15 +7,15 @@
     path: "/tmp"
 
     database: {
-      server: $database_server
-      port: 2345
-      max_connections: 5000
-      enabled: true
+        server: $database_server
+        port: 2345
+        max_connections: 5000
+        enabled: true
     }
 
     hosts: [
-      "tiger"
-      "bobcat"
+        "tiger"
+        "bobcat"
     ]
 
     query: term("name": "Mike")
