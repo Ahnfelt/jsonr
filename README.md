@@ -208,8 +208,6 @@ The last thing in the file is the encoded value, described by the table below.
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
-| `1101 0011  000x xxxx (then 48 more bits of x)` | A 53 bit non-negative integer `x` |
-| `1101 0011  001x xxxx (then 48 more bits of x)` | A 53 bit integer `(-x)-1` |
 | `1101 0100  (then 32 bits of x)` | A 32 bit integer `x-2^31` |
 | `1101 0101  (then 32 bits of x)` | A 32 bit floating point number `x` |
 | `1101 0110  (then 64 bits of x)` | A 64 bit floating point number `x` |
