@@ -225,7 +225,7 @@ The last thing in the file is the encoded value, described by the table below.
 | `1111 1xxx` | Data of size `x` |
 
  * Arrays are followed by `x` values, each an element in the array.
- * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id>) this.my_key = decode; else /* normal decode */`
+ * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
  * Strings are followed by `x` UTF-8 bytes.
  * Datas are followed by a null or string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. If null, the mediatype must be specified by the schema. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
