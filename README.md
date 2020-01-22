@@ -220,7 +220,7 @@ The last thing in the file is the encoded value, described by the table below.
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
-| `1101 0100  (then 32 bits of x)` | A 32 bit integer `x-2^31` |
+| `1101 0100  (then 32 bits of x)` | A 32 bit signed two's complement integer `x` |
 | `1101 0101  (then 32 bits of x)` | A 32 bit floating point number `x` |
 | `1101 0110  (then 64 bits of x)` | A 64 bit floating point number `x` |
 | `1101 0111  0000 xxxx  (then 48 more bits of x)` | Array of size `x` |
