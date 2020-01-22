@@ -218,21 +218,21 @@ The last thing in the file is the encoded value, described by the table below.
 | `0xxx xxxx` | Dynamic dictionary entry `x` |
 | `10xx xxxx` | Integer `x-16` |
 | `1100 0xxx  xxxx xxxx` | Static dictionary entry `x` |
-| `1100 1xxx  xxxx xxxx` | An 11 bit non-negative integer `x+1008` |
+| `1100 1xxx  xxxx xxxx` | An 11 bit integer `x+1008` |
 | `1101 0000` | `null` |
 | `1101 0001` | `false` |
 | `1101 0010` | `true` |
-| `1101 0100  (then 32 bits of x)` | A 32 bit signed two's complement integer `x` |
-| `1101 0101  (then 32 bits of x)` | A 32 bit floating point number `x` |
-| `1101 0110  (then 64 bits of x)` | A 64 bit floating point number `x` |
-| `1101 0111  0000 xxxx  (then 48 more bits of x)` | Array of size `x` |
-| `1101 0111  0001 xxxx  (then 48 more bits of x)` | Object of size `x` |
-| `1101 0111  0010 xxxx  (then 48 more bits of x)` | String of size `x` |
-| `1101 0111  0011 xxxx  (then 48 more bits of x)` | Data of size `x` |
-| `1101 1000  (then 16 bits of x)` | Array of size `x` |
-| `1101 1001  (then 16 bits of x)` | Object of size `x` |
-| `1101 1010  (then 16 bits of x)` | String of size `x` |
-| `1101 1011  (then 16 bits of x)` | Data of size `x` |
+| `1101 0100  (then 32 bits of x)` | A 32 bit signed integer `x` |
+| `1101 0110  (then 32 bits of x)` | A 32 bit floating point number `x` |
+| `1101 0111  (then 64 bits of x)` | A 64 bit floating point number `x` |
+| `1101 1000  (then 48 bits of x)` | Array of size `x` |
+| `1101 1001  (then 48 bits of x)` | Object of size `x` |
+| `1101 1010  (then 48 bits of x)` | String of size `x` |
+| `1101 1011  (then 48 bits of x)` | Data of size `x` |
+| `1101 1100  (then 16 bits of x)` | Array of size `x` |
+| `1101 1101  (then 16 bits of x)` | Object of size `x` |
+| `1101 1110  (then 16 bits of x)` | String of size `x` |
+| `1101 1111  (then 16 bits of x)` | Data of size `x` |
 | `1110 0xxx` | Array of size `x` |
 | `1110 1xxx` | Object of size `x` |
 | `1111 0xxx` | String of size `x` |
@@ -243,4 +243,4 @@ The last thing in the file is the encoded value, described by the table below.
  * Strings are followed by `x` UTF-8 bytes.
  * Datas are followed by a string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
-The encoding uses network byte order. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
+The encoding uses network byte order. Integers are unsigned unless othewise noted, and two's complement representation is used for signed integers. IEEE 754 is used for floating point numbers, and infinities/NaNs are disallowed. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
