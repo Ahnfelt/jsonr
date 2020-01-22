@@ -37,7 +37,7 @@ A JSONR file consists of zero or more parameter definitions followed by either a
 
 ```
 file = {'$' string ':' value [',']} (value | fields)
-parameter = '$' string ['(' fields ')']
+parameter = '$' string ['(' fields ')'] ['...']
 value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
 object = '{' fields '}' | string '(' (value | fields) ')'
@@ -62,6 +62,8 @@ Parameters allow a JSONR file to be a template for e.g. configurations. They are
 Immediately after its declaration, a parameter can be used in place of a value. The value is then the value of the parameter.
 
 It's possible to branch on parameters, using the syntax `$my_parameter(value1: 10, value2: 20)`. This means that if `$my_parameter` is the string `"value1"`, return `10`. Otherwise, if it's `"value2"`, return `20`. Otherwise, fail.
+
+If a parameter use is followed by '...', the entries in it is spliced into the surrounding array or object. The value must be an array in the former case and an object in the latter case.
 
 When parsing a JSONR file with parameter declarations, a map of parameter values may be supplied that is then used instead of the default value of the parameter declaration.
 
