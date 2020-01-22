@@ -199,7 +199,8 @@ The format is **forward compatible**, meaning you can add optional fields to the
 
 The static dictionary consists of 2048 strings of at most 64 bytes each. After the static entries, it's filled with empty strings.
 
-The dynamic dictionary is a circular buffer that ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with empty stings.
+The dynamic dictionary is a circular buffer that ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with empty strings.
+
 
 ## Header
 
