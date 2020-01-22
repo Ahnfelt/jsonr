@@ -197,10 +197,9 @@ The format is **forward compatible**, meaning you can add optional fields to the
 | Static dictionary | Populated by the `_strings` field in the schema (if any) |
 | Dynamic dictionary | The 128 most recently encountered strings |
 
-The static dictionary consists of up to 2048 strings of at most 64 bytes each.
+The static dictionary consists of 2048 strings of at most 64 bytes each. After the static entries, it's filled with empty strings.
 
-The dynamic dictionary ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with single character strings for each of the 128 ASCII codes.
-
+The dynamic dictionary is a circular buffer that ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with empty stings.
 
 ## Header
 
