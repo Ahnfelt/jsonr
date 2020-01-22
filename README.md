@@ -219,24 +219,26 @@ The last thing in the file is the encoded value, described by the table below.
 | `10xx xxxx` | Integer `x-16` |
 | `1100 0xxx  xxxx xxxx` | Static dictionary entry `x` |
 | `1100 1xxx  xxxx xxxx` | An 11 bit integer `x+1008` |
-| `1101 0000` | `null` |
-| `1101 0010` | `false` |
-| `1101 0011` | `true` |
-| `1101 0100  (then 32 bits of x)` | A 32 bit signed integer `x` |
-| `1101 0110  (then 32 bits of x)` | A 32 bit floating point number `x` |
-| `1101 0111  (then 64 bits of x)` | A 64 bit floating point number `x` |
-| `1101 1000  (then 48 bits of x)` | Array of size `x` |
-| `1101 1001  (then 48 bits of x)` | Object of size `x` |
-| `1101 1010  (then 48 bits of x)` | String of size `x` |
-| `1101 1011  (then 48 bits of x)` | Data of size `x` |
-| `1101 1100  (then 16 bits of x)` | Array of size `x` |
-| `1101 1101  (then 16 bits of x)` | Object of size `x` |
-| `1101 1110  (then 16 bits of x)` | String of size `x` |
-| `1101 1111  (then 16 bits of x)` | Data of size `x` |
-| `1110 0xxx` | Array of size `x` |
-| `1110 1xxx` | Object of size `x` |
-| `1111 0xxx` | String of size `x` |
-| `1111 1xxx` | Data of size `x` |
+| `1101 0xxx` | Array of size `x` |
+| `1101 1xxx` | Object of size `x` |
+| `1110 0xxx` | String of size `x` |
+| `1110 1xxx` | Data of size `x` |
+| `1111 0000  (then 16 bits of x)` | Array of size `x` |
+| `1111 0001  (then 16 bits of x)` | Object of size `x` |
+| `1111 0010  (then 16 bits of x)` | String of size `x` |
+| `1111 0011  (then 16 bits of x)` | Data of size `x` |
+| `1111 0100  (then 48 bits of x)` | Array of size `x` |
+| `1111 0101  (then 48 bits of x)` | Object of size `x` |
+| `1111 0110  (then 48 bits of x)` | String of size `x` |
+| `1111 0111  (then 48 bits of x)` | Data of size `x` |
+| `1111 1000  (then 32 bits of x)` | A 32 bit signed integer `x` |
+| `1111 1001  (then 32 bits of x)` | A 32 bit floating point number `x` |
+| `1111 1010  (then 64 bits of x)` | A 64 bit floating point number `x` |
+| `1111 1011` | Reserved |
+| `1111 1100` | `null` |
+| `1111 1101` | `false` |
+| `1111 1110` | `true` |
+| `1111 1111` | Reserved |
 
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
