@@ -213,15 +213,15 @@ The last thing in the file is the encoded value, described by the table below.
 
 ## Value encoding
 
-| Bits | Description |
-| :------ | :------------ |
+| Bits        | Description                  |
+| :---------- | :--------------------------- |
 | `0xxx xxxx` | Dynamic dictionary entry `x` |
 | `10xx xxxx` | Integer `x-16` |
 | `1100 0xxx  xxxx xxxx` | Static dictionary entry `x` |
 | `1100 1xxx  xxxx xxxx` | An 11 bit integer `x+1008` |
 | `1101 0000` | `null` |
-| `1101 0001` | `false` |
-| `1101 0010` | `true` |
+| `1101 0010` | `false` |
+| `1101 0011` | `true` |
 | `1101 0100  (then 32 bits of x)` | A 32 bit signed integer `x` |
 | `1101 0110  (then 32 bits of x)` | A 32 bit floating point number `x` |
 | `1101 0111  (then 64 bits of x)` | A 64 bit floating point number `x` |
