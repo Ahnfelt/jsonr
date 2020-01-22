@@ -234,11 +234,11 @@ The last thing in the file is the encoded value, described by the table below.
 | `1111 1000  (then 32 bits of x)` | A 32 bit signed integer `x` |
 | `1111 1001  (then 32 bits of x)` | A 32 bit floating point number `x` |
 | `1111 1010  (then 64 bits of x)` | A 64 bit floating point number `x` |
-| `1111 1011` | Reserved |
+| `1111 1011` | (reserved) |
 | `1111 1100` | `null` |
 | `1111 1101` | `false` |
 | `1111 1110` | `true` |
-| `1111 1111` | Reserved |
+| `1111 1111` | (reserved) |
 
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
