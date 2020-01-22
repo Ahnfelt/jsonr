@@ -63,7 +63,7 @@ Immediately after its declaration, a parameter can be used in place of a value. 
 
 It's possible to branch on parameters, using the syntax `$my_parameter(value1: 10, value2: 20)`. This means that if `$my_parameter` is the string `"value1"`, return `10`. Otherwise, if it's `"value2"`, return `20`. Otherwise, fail.
 
-If a parameter use is followed by '...', the entries in it is spliced into the surrounding array or object. The value must be an array in the former case and an object in the latter case.
+If a parameter is followed by `...`, the entries in it is spliced into the surrounding array or object. The value must be an array in the former case and an object in the latter case.
 
 When parsing a JSONR file with parameter declarations, a map of parameter values may be supplied that is then used instead of the default value of the parameter declaration.
 
