@@ -217,6 +217,10 @@ The bits in the 8-byte header are as follows:
 
 The `c` is used as a checksum that can sometimes detect if the static dictionary of the decoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
 
+The static dictionary is populated from the `_strings` field in the schema (if any). Only the `n` first strings are used, and the rest of the 2048 strings become empty.
+
+Note that neither JSON or the JSONR textual format can start with the byte `1101 0011`, so it can be used to dectect binary encoding.
+
 The header is followed by the encoded value, described by the table below.
 
 
