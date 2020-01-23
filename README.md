@@ -196,14 +196,11 @@ The format is **forward compatible**, meaning you can add optional fields to the
 
 The bits in the 8-byte header are as follows:
 
-    1101 0011  0100 1010  0101 0010  0110 0010  0000 0001  0000 0000  cccc nnnn  nnnn nnnn
+    1101 0011  0100 1010  0101 0010  0110 0010  0000 0001  0000 0000  0000 nnnn  nnnn nnnn
     ------------------------------------------  ---------  ---------  --------------------
-             magic number: \211 J R b            version   reserved     static dictionary
+             magic number: \211 J R b            version   reserved   static dictionary size
 
 * `n` is the number of entries in the static dictionary, at most 2048. 
-* `c` is the 4 least significant bits of the first character of string `n-1` in the static dictionary. 
-
-The `c` is used as a checksum that can sometimes detect if the static dictionary of the decoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
 
 The static dictionary is populated from the `_strings` field in the schema (if any). Only the `n` first strings are used, and the rest of the 2048 strings become empty.
 
