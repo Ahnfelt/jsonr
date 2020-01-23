@@ -222,15 +222,15 @@ The last thing in the file is the encoded value, described by the table below.
 | `1101 0xxx` | Array of size `x` |
 | `1101 1xxx` | Object of size `x` |
 | `1110 0xxx` | String of size `x` |
-| `1110 1xxx` | Data of size `x` |
+| `1110 1xxx` | Binary data of size `x` |
 | `1111 0000  (then 16 bits of x)` | Array of size `x` |
 | `1111 0001  (then 16 bits of x)` | Object of size `x` |
 | `1111 0010  (then 16 bits of x)` | String of size `x` |
-| `1111 0011  (then 16 bits of x)` | Data of size `x` |
+| `1111 0011  (then 16 bits of x)` | Binary data of size `x` |
 | `1111 0100  (then 48 bits of x)` | Array of size `x` |
 | `1111 0101  (then 48 bits of x)` | Object of size `x` |
 | `1111 0110  (then 48 bits of x)` | String of size `x` |
-| `1111 0111  (then 48 bits of x)` | Data of size `x` |
+| `1111 0111  (then 48 bits of x)` | Binary data of size `x` |
 | `1111 1000  (then 32 bits of x)` | A 32 bit signed integer `x` |
 | `1111 1001  (then 32 bits of x)` | A 32 bit floating point number `x` |
 | `1111 1010  (then 64 bits of x)` | A 64 bit floating point number `x` |
@@ -243,6 +243,6 @@ The last thing in the file is the encoded value, described by the table below.
  * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
  * Strings are followed by `x` UTF-8 bytes.
- * Datas are followed by a string value with the mediatype (suffixed with `;base64` if applicable), and then `x` bytes. The `x` bytes are binary data if the mediatype has the `;base64` suffix, and UTF-8 bytes otherwise. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
+ * Binary datas are followed by a string value with the mediatype suffixed with `;base64`, and then `x` bytes. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
 The encoding uses network byte order. Integers are unsigned unless othewise noted, and two's complement representation is used for signed integers. IEEE 754 is used for floating point numbers, and infinities/NaNs are disallowed. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
