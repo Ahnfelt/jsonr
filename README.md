@@ -215,7 +215,7 @@ The bits in the 8-byte header are as follows:
 * `n` is the number of entries in the static dictionary, at most 2048. 
 * `c` is the 4 least significant bits of the first character of string `n-1` in the static dictionary. 
 
-The `c` is used as a checksum that can sometimes detect if the static dictionary of the encoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
+The `c` is used as a checksum that can sometimes detect if the static dictionary of the decoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
 
 The header is followed by the encoded value, described by the table below.
 
