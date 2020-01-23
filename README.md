@@ -212,7 +212,7 @@ The bits in the 8-byte header are as follows:
     ------------------------------------------  ---------  ---------  --------------------
              magic number: \211 J R b            version   reserved     static dictionary
 
-* `n` is the number of entries in the static dictionary. 
+* `n` is the number of entries in the static dictionary, at most 2048. 
 * `c` is the 4 least significant bits of the first character of string `n-1` in the static dictionary. 
 
 The `c` is used as a checksum that can sometimes detect if the static dictionary of the encoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
@@ -249,7 +249,7 @@ The header is followed by the encoded value, described by the table below.
 | `1111 1110` | `true` |
 | `1111 1111` | (reserved) |
 
- * Arrays are followed by `x` values, each an element in the array, at most 2048.
+ * Arrays are followed by `x` values, each an element in the array.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
  * Strings are followed by `x` UTF-8 bytes.
  * Binary datas are followed by a string value with the mediatype suffixed with `;base64`, and then `x` bytes. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
