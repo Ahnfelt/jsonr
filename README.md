@@ -249,7 +249,7 @@ The header is followed by the encoded value, described by the table below.
 | `1111 1110` | `true` |
 | `1111 1111` | (reserved) |
 
- * Arrays are followed by `x` values, each an element in the array.
+ * Arrays are followed by `x` values, each an element in the array, at most 2048.
  * Objects are followed by `2*x` values, each pair a key/value in the object. If any static dictionary IDs are used as keys, those IDs must come first and in ascending order. This knowledge can be used in a fast path in the decoder, which can do `if(next_two_bytes == <static dictionary id for my_field>) this.my_field = decode; else /* normal decode */`
  * Strings are followed by `x` UTF-8 bytes.
  * Binary datas are followed by a string value with the mediatype suffixed with `;base64`, and then `x` bytes. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
