@@ -206,9 +206,18 @@ The dynamic dictionary is a circular buffer that ignores empty strings and strin
 
 ## Header
 
-The binary encoding starts with the 32 bit magic number `\211 J R b` for "JSONR (binary encoding)". Then comes a single byte version number, which must currently be the bits `00000001`. Then comes two bytes that is the number of static dictionary entries (max 2048), and then four bytes that is the CRC-32 of those strings. Everything is in network byte order. 
+The bits in the 8-byte header are as follows:
 
-The last thing in the file is the encoded value, described by the table below.
+    1101 0011  0100 1010  0101 0010  0110 0010  0000 0001  0000 0000  cccc nnnn  nnnn nnnn
+    ------------------------------------------  ---------  ---------  --------------------
+             magic number: \211 J R b            version   reserved     static dictionary
+
+* `n` is the number of entries in the static dictionary. 
+* `c` is the 4 least significant bits of the first character of string `n-1` in the static dictionary. 
+
+The `c` is used as a checksum that can sometimes detect if the static dictionary of the encoder is wrong. It's all zero if there is no such string, no such character, or the character is not in the ASCII range (0-127). This last requirement is to avoid having to convert the string from whatever encoding it's using in the target language.
+
+The header is followed by the encoded value, described by the table below.
 
 
 ## Value encoding
