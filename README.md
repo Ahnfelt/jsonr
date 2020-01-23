@@ -192,18 +192,6 @@ It may be optionally be combined with a schema to reduce space usage and increas
 The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
 
 
-## Dictionaries
-
-| Dictionary | Description |
-| :------ | :------------ |
-| Static dictionary | Populated by the `_strings` field in the schema (if any) |
-| Dynamic dictionary | The 128 most recently encountered strings |
-
-The static dictionary consists of 2048 strings of at most 64 bytes each. After the static entries, it's filled with empty strings.
-
-The dynamic dictionary is a circular buffer that ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with empty strings.
-
-
 ## Header
 
 The bits in the 8-byte header are as follows:
@@ -259,3 +247,16 @@ The header is followed by the encoded value, described by the table below.
  * Binary datas are followed by a string value with the mediatype suffixed with `;base64`, and then `x` bytes. Note the mediatype string participates in the dictionaries on the same terms as all other strings.
 
 The encoding uses network byte order. Integers are unsigned unless othewise noted, and two's complement representation is used for signed integers. IEEE 754 is used for floating point numbers, and infinities/NaNs are disallowed. If no schema is specified, it's assumed to be `_: "dynamic", dynamic: any()`.
+
+
+## Dictionaries
+
+| Dictionary | Description |
+| :------ | :------------ |
+| Static dictionary | Populated by the `_strings` field in the schema (if any) |
+| Dynamic dictionary | The 128 most recently encountered strings |
+
+The static dictionary consists of 2048 strings of at most 64 bytes each. After the static entries, it's filled with empty strings.
+
+The dynamic dictionary is a circular buffer that ignores empty strings and strings that are longer than 128 bytes. It's initialy populated with empty strings.
+
