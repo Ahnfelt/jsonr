@@ -187,7 +187,7 @@ In the `_documentation` and `_hints` fields, the reserved key `_` is a documenta
 
 JSONR specifies a binary encoding for JSONR values (and thus also JSON values) that can be optionally used in place of the textual format to reduce space usage.
 
-It may be combined with a schema to reduce space usage further.
+It may be optionally be combined with a schema to reduce space usage and increase decoding speed further.
 
 The format is **forward compatible**, meaning you can add optional fields to the schema and still be able to decode old files.
 
