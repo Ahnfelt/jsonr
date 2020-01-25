@@ -36,7 +36,7 @@ The JSONR specification is designed to be **easy to implement**.
 A JSONR file consists of zero or more parameter definitions followed by either a value or zero or more fields. The EBNF grammar is as follows:
 
 ```
-file = {'$' string ':' value [',']} (value | fields)
+file = json | {'$' string ':' value [',']} fields
 parameter = '$' string ['(' fields ')'] ['...']
 value = parameter | json_string | json_number | object | array | 'true' | 'false' | 'null'
 string = /[A-Za-z_][A-Za-z0-9_]*/ | json_string
@@ -45,7 +45,7 @@ array = string? '[' {value [',']} ']'
 fields = {string ':' value [',']}
 ```
 
-The `json_number` and `json_string` rules are exactly as JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
+The `json`, `json_number` and `json_string` rules are exactly as JSON, JSON numbers and JSON strings respectively. Whitespace is as in JSON and comments begin with `#` and last to the end of the file or the end of the line `\n`, whichever comes first.
 
 
 ## Banner
